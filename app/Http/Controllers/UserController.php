@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Http\Resources\CategoriesResource;
+use App\User;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories.categories')->with(
-            ['categories' => Category::all()]
-        );
+        $users = User::paginate();
+        return view('users.users')->withUsers($users);
     }
 
     /**
@@ -38,36 +36,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-           'title' => 'required',
-           'color' => 'required'
-        ]);
-        Category::create(['title' => $request->title, 'color' => $request->color]);
-        return  redirect()->back()->with('message', 'Category Created');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return view('categories.category')->with(
-            [
-                'category' => Category::findOrFail($id)
-            ]
-        );
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
         //
     }
@@ -76,10 +65,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,10 +76,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
     }

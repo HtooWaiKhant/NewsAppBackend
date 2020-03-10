@@ -56,6 +56,30 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('categories.index') }}">
+                                        {{ __('Categories') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('tags.index') }}">
+                                        {{ __('Tags') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('comments.index') }}">
+                                        {{ __('Comments') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">
+                                        {{ __('Users') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('posts.index') }}">
+                                        {{ __('Posts') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('posts.create') }}">
+                                        {{ __('Create Post') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

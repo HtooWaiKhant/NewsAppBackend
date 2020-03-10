@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: webdevops/php-apache
+    image: registry.gitlab.com/myandel/admin-panel:master
     container_name: app
     restart: unless-stopped
     tty: true
@@ -59,29 +59,16 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: Myandel@1
-      MYSQL_USER: myandel
-      MYSQL_PASSWORD: 1234
-      MYSQL_DATABASE: myandel
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: news
     ports:
       - "3306:3306"
     expose:
       - "3306"
     networks:
       - app_network
-
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    environment:
-      MYSQL_USER: "myandel"
-      MYSQL_PASSWORD: "1234"
-      MYSQL_ROOT_PASSWORD: "myandel"
-      PMA_HOST: database_server
-    ports:
-      - "10081:80"
-    depends_on:
-      - database_server
 
 networks:
   app_network:

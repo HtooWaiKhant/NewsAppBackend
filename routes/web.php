@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::middleware(['auth'])->group(function (){
+    Route::resource('categories', 'CategoryController');
+    Route::resource('tags', 'TagController');
+    Route::resource('comments', 'CommentController');
+    Route::resource('users', 'UserController');
+    Route::resource('posts', 'PostController');
+});
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,9 +30,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

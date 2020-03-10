@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Image;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::paginate();
+        return view('posts.posts')->withPosts($posts);
     }
 
     /**
@@ -24,7 +28,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -35,7 +41,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'title' => 'required',
+           'post_content' => 'required',
+            'category_id' => 'required'
+        ]);
+        $post = Post::create([
+           'title' => $request->title,
+           'content' => $request->post_content,
+            'category_id' => $request->category_id,
+            'author_id' => auth()->user()->id,
+            'post_type' => 'text'
+        ]);
+        $post->tags()->sync($request->tags);
+
+        if($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach ($images as $key => $image){
+                $path = $image->store('public');
+                Image::create([
+                    'description'=> '', 'url'=>$path, 'post_id' => $post->id, 'featured' => $key == 0 ? true : false
+                ]);
+            }
+        }
+
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -44,9 +75,10 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.post')->withPost($post);
     }
 
     /**
