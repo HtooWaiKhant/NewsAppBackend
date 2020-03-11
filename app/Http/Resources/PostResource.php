@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -22,7 +23,7 @@ class PostResource extends JsonResource
             'author_id' => $this->author_id,
             'category_id' => $this->category_id,
             'meta_data' => $this->meta_data,
-            'updated_at' => $this->updated_at,
+            'updated_at' => Carbon::parse($this->updated_at)->format('d/m/Y'),
             'category' =>  new CategoryResource($this->category),
             'author' => new UserResource($this->author),
             'images' => ImageResource::collection($this->images),
