@@ -22,7 +22,12 @@ class PostResource extends JsonResource
             'author_id' => $this->author_id,
             'category_id' => $this->category_id,
             'meta_data' => $this->meta_data,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'category' =>  new CategoryResource($this->category),
+            'author' => new UserResource($this->author),
+            'images' => ImageResource::collection($this->images),
+            'tags' => TagResource::collection($this->tags),
+            'comments' => CommentResource::collection($this->comments)
         ];
     }
 }
